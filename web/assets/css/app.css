@@ -1,3 +1,7 @@
+.table td {
+  vertical-align: middle;
+}
+
 [v-cloak] {
   display:none;
 }

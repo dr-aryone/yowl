@@ -1,7 +1,7 @@
 'use strict';
 
-module.exports = function(app) {
-  var controller = require('../controllers/alertController');
+module.exports = function(app, io) {
+  var controller = require('../controllers/alertController')(io);
 
   app.route('/api/alerts')
     .get(controller.list_all_alerts)

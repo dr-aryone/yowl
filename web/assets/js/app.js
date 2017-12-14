@@ -20,12 +20,26 @@ Vue.component("severityTag", {
 var app = new Vue({
   el: "#app",
   data: {
-    alerts: [
-      {
-        code: "E-12932",
-        message: "Something",
-        severity: "warning"
-      }
-    ]
+    alerts: []
+  },
+  methods: {
+    getAlerts: function() {
+      Alerts.list()
+        .then((response) => this.alerts = response.data)
+        .catch((error) => console.log(error));
+    }
+  },
+  created: function() {
+    var inst = this;
+
+    inst.getAlerts();
+
+    var socket = io.connect('http://localhost:3000');
+    socket.on("connect", function(){
+      console.log("Socket connected.");
+    });
+    socket.on('alert:created', function(alert) {
+      inst.alerts.push(alert);
+    });
   }
 });

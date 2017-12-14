@@ -29,9 +29,12 @@
         <div class="column">
           <table class="table is-striped" v-cloak>
             <tr v-for="alert in alerts">
-              <td>{{alert.code}}</td>
-              <td>{{alert.message}}</td>
               <td><severity-tag v-bind:level="alert.severity" /></td>
+              <td>{{alert.type}}</td>
+              <td>{{alert.message}}</td>              
+              <td>
+                <button type="button" class="button is-light">Clear</button>
+              </td>
             </tr>
           </table>
         </div>
@@ -43,7 +46,10 @@
     <span v-bind:class="[tagClass, levelClass]">{{levelDisplay}}</span>
   </script>
 
+  <script src="static/vendor/axios/axios.js"></script>
+  <script src="static/vendor/socket.io/socket.io.js"></script>
   <script src="static/vendor/vue/vue.js"></script>
+  <script src="static/js/services/alertService.js"></script>
   <script src="static/js/app.js"></script>
 </body>
 </html>
