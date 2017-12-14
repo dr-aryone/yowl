@@ -1,0 +1,27 @@
+{
+  "name": "yowl",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "dependencies": {
+    "express": "^4.16.2",
+    "socketio": "^1.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.12.7"
+  },
+  "scripts": {
+    "dev": "nodemon server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nathanenglert/yowl.git"
+  },
+  "author": "Nathan Englert",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nathanenglert/yowl/issues"
+  },
+  "homepage": "https://github.com/nathanenglert/yowl#readme"
+}
