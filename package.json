@@ -6,7 +6,9 @@
   "dependencies": {
     "express": "^4.16.2",
     "nedb": "^1.8.0",
-    "socketio": "^1.0.0"
+    "skeleton-css": "^2.0.4",
+    "socketio": "^1.0.0",
+    "vue": "^2.5.10"
   },
   "devDependencies": {
     "nodemon": "^1.12.7"

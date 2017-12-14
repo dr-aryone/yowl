@@ -1,14 +1,12 @@
 'use strict';
 
 module.exports = function(app) {
-  var alertController = require('../controllers/alertController');
+  var controller = require('../controllers/alertController');
 
-  app.route('/alerts')
-    .get(alertController.list_all_alerts)
-    .post(alertController.create_an_alert);
+  app.route('/api/alerts')
+    .get(controller.list_all_alerts)
+    .post(controller.create_an_alert);
 
-  app.route('/alerts/:alertId')
-    .get(alertController.read_an_alert);
-    //.put(todoList.update_a_task)
-    //.delete(todoList.delete_a_task);
+  app.route('/api/alerts/:alertId')
+    .get(controller.read_an_alert);
 };

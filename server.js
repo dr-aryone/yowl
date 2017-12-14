@@ -5,9 +5,12 @@ var express = require('express'),
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use('/static', express.static('./web/assets'));
+app.use('/static/vendor/skeleton', express.static('./node_modules/skeleton-css/css'));
+app.use('/static/vendor/vue', express.static('./node_modules/vue/dist'));
 
-var routes = require('./api/routes/alertRoutes');
-routes(app);
+require('./api/routes/alertRoutes')(app);
+require('./web/routes/dashboardRoutes')(app);
 
 app.listen(port);
 
