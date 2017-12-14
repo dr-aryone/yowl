@@ -23,21 +23,25 @@
     </div>
   </section>
 
-  <section class="section">
+  <section id="app" class="section">
     <div class="container">
       <div class="columns">
         <div class="column">
-          <table class="table is-striped">
-            <tr>
-              <td>E-19238</td>
-              <td>Something happened somewhere.</td>
-              <td><span class="tag is-warning">Warning</span></td>
+          <table class="table is-striped" v-cloak>
+            <tr v-for="alert in alerts">
+              <td>{{alert.code}}</td>
+              <td>{{alert.message}}</td>
+              <td><severity-tag v-bind:level="alert.severity" /></td>
             </tr>
           </table>
         </div>
       </div>
     </div>
   </section>
+
+  <script type="text/x-template" id="severity-tag-template">
+    <span v-bind:class="[tagClass, levelClass]">{{levelDisplay}}</span>
+  </script>
 
   <script src="static/vendor/vue/vue.js"></script>
   <script src="static/js/app.js"></script>
