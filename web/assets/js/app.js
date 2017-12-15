@@ -23,6 +23,18 @@ var app = new Vue({
     alerts: []
   },
   methods: {
+    deleteAlert: function(id, index) {
+      var inst = this;
+
+      Alerts.remove(id)
+        .then(function (response) {
+          if (response.data.success === true)
+            inst.alerts.splice(index, 1);
+          else
+            console.log("Failed to delete alert");
+        })
+        .catch((error) => console.log(error));
+    },
     getAlerts: function() {
       Alerts.list()
         .then((response) => this.alerts = response.data)

@@ -28,12 +28,18 @@
       <div class="columns">
         <div class="column">
           <table class="table is-striped" v-cloak>
-            <tr v-for="alert in alerts">
+            <tr v-for="(alert, index) in alerts">
               <td><severity-tag v-bind:level="alert.severity" /></td>
               <td>{{alert.type}}</td>
               <td>{{alert.message}}</td>              
               <td>
                 <button type="button" class="button is-light">Clear</button>
+                <button 
+                  type="button" 
+                  class="button is-light" 
+                  v-on:click="deleteAlert(alert._id, index)">
+                  Delete
+                </button>
               </td>
             </tr>
           </table>

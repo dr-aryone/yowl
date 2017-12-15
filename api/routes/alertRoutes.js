@@ -8,5 +8,6 @@ module.exports = function(app, io) {
     .post(controller.create_an_alert);
 
   app.route('/api/alerts/:alertId')
+    .delete(controller.delete_an_alert)
     .get(controller.read_an_alert);
 };

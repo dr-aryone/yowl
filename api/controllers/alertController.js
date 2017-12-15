@@ -27,8 +27,18 @@ module.exports = function(io) {
         res.json(alert);
       });
     },
+    delete_an_alert: function(req, res) {
+      Alerts.remove({_id: req.params.alertId}, {}, function (err, numRemoved) {
+        if (err) {
+          res.send(err);
+          return;
+        }
+        
+        res.json({"success":numRemoved == 1});
+      });
+    },
     read_an_alert: function(req, res) {
-      Alerts.findOne({_id: req.params.id}, function(err, alert) {
+      Alerts.findOne({_id: req.params.alertId}, function(err, alert) {
         if (err) {
           res.send(err);
           return;
