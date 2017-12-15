@@ -27,12 +27,12 @@
     <div class="container">
       <div class="columns">
         <div class="column">
-          <table class="table is-striped" v-cloak>
+          <table id="alerts-table" class="table is-hoverable is-fullwidth" v-cloak>
             <tr v-for="(alert, index) in alerts">
               <td><severity-tag v-bind:level="alert.severity" /></td>
               <td>{{alert.type}}</td>
               <td>{{alert.message}}</td>              
-              <td>
+              <td class="alert-actions">
                 <button type="button" class="button is-light">Clear</button>
                 <button 
                   type="button" 

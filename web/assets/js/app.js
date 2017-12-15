@@ -6,7 +6,8 @@ Vue.component("severityTag", {
   },
   computed: {
     levelClass: function() {
-      return "is-" + this.level;
+      var name = this.level == "error" ? "danger" : this.level;
+      return "is-" + name;
     },
     levelDisplay: function() {
       return this.level.charAt(0).toUpperCase() + this.level.slice(1);
