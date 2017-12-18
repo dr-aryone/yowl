@@ -6,7 +6,7 @@
           <div class="column">
             <nav class="navbar">
               <div class="navbar-brand">
-                <a class="navbar-item" @click="openDashboardView()">
+                <a class="navbar-item" @click="openView('dashboard-view')">
                   Yowl
                 </a>
                 <div class="navbar-burger burger" data-target="main-nav">
@@ -18,11 +18,14 @@
 
               <div id="main-nav" class="navbar-menu">
                 <div class="navbar-start">
-                  <a :class="['navbar-item', {'is-active': currentView == 'dashboard-view'}]" @click="openDashboardView()">
+                  <a :class="['navbar-item', {'is-active': currentView == 'dashboard-view'}]" @click="openView('dashboard-view')">
                     Dashboard
                   </a>
-                  <a :class="['navbar-item', {'is-active': currentView == 'rules-view'}]" @click="openRulesView()">
+                  <a :class="['navbar-item', {'is-active': currentView == 'rules-view'}]" @click="openView('rules-view')">
                     Rules
+                  </a>
+                  <a :class="['navbar-item', {'is-active': currentView == 'settings-view'}]" @click="openView('settings-view')">
+                    Settings
                   </a>
                 </div>                
               </div>
@@ -47,13 +50,15 @@ import DashboardView from './components/DashboardView'
 import IO from 'socket.io-client'
 import RulesView from './components/RulesView'
 import Rule from './components/Rule'
+import SettingsView from './components/SettingsView'
 
 export default {
   name: 'app',
   components: {
     DashboardView,
     RulesView,
-    Rule
+    Rule,
+    SettingsView
   },
   created () {
     var inst = this
@@ -76,7 +81,7 @@ export default {
   },
   data () {
     return {
-      currentView: 'dashboard-view',
+      currentView: 'settings-view',
       currentPane: '',
       paneModel: {}
     }
@@ -85,14 +90,11 @@ export default {
     onPaneClose () {
       this.currentPane = ''
     },
-    openDashboardView () {
-      this.currentView = 'dashboard-view'
-    },
     openRulePane () {
       this.currentPane = 'rule'
     },
-    openRulesView () {
-      this.currentView = 'rules-view'
+    openView (view) {
+      this.currentView = view
     }
   }
 }
@@ -136,5 +138,9 @@ export default {
 
 .actions {
   text-align: right;
+}
+
+.view.section {
+  padding-top: 0;
 }
 </style>
