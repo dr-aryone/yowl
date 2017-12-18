@@ -1,5 +1,7 @@
 # Yowl
 
+> NOTE: Yowl is a work in progress, we're not even to an Alpha release yet.
+
 Yowl is a alert and monitoring system that helps you stay on top of production issues. 
 
 Most businesses rely heavily on email notifications in order to monitor their production systems. These notifications often go unnoticed for periods of time, especially after business hours, causing potential impacts to customer experience and revenue. The goal of Yowl is to increase exposure to these alerts and speed up response times.
