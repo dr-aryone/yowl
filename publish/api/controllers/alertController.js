@@ -1,6 +1,6 @@
 const Alerts = require('../models/alertModel')
 
-module.exports = function AlertController (router) {
+module.exports = function AlertController (router, io) {
   router.get('/alerts', function (req, res) {
     Alerts.find({}, function (err, alerts) {
       if (err) {
@@ -21,7 +21,7 @@ module.exports = function AlertController (router) {
         return
       }
 
-      // io.sockets.emit('alert:created', alert)
+      io.sockets.emit('alert:created', alert)
       res.json(alert)
     })
   })

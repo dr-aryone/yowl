@@ -48,6 +48,13 @@ export default {
   components: {
     SeverityTag
   },
+  created () {
+    var inst = this
+
+    EventBus.$on('alert:created', (alert) => {
+      inst.alerts.push(alert)
+    })
+  },
   data () {
     return {
       alerts: []
@@ -61,7 +68,7 @@ export default {
       var inst = this
 
       Alerts.remove(id)
-        .then(function (response) {
+        .then((response) => {
           if (response.data.success === true) {
             inst.alerts.splice(index, 1)
           } else {
@@ -77,17 +84,7 @@ export default {
     }
   },
   mounted () {
-    var inst = this
-
-    inst.getAlerts()
-
-    // var socket = io.connect('http://localhost:3000');
-    // socket.on("connect", function(){
-    //   console.log("Socket connected.");
-    // });
-    // socket.on('alert:created', function(alert) {
-    //   inst.alerts.push(alert);
-    // });
+    this.getAlerts()
   }
 }
 </script>

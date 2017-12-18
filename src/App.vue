@@ -44,6 +44,7 @@
 <script>
 import EventBus from './services/EventBus'
 import DashboardView from './components/DashboardView'
+import IO from 'socket.io-client'
 import RulesView from './components/RulesView'
 import Rule from './components/Rule'
 
@@ -68,6 +69,10 @@ export default {
       inst.paneModel = rule
       inst.openRulePane()
     })
+
+    var socket = IO.connect('http://localhost:3000')
+    socket.on('connect', () => console.log('Socket connected.'))
+    socket.on('alert:created', (alert) => EventBus.$emit('alert:created', alert))
   },
   data () {
     return {
