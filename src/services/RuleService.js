@@ -1,8 +1,9 @@
 import axios from 'axios'
 
 export default {
-  create (severity, errorCode, keywords, broadcast) {
+  create (severity, application, errorCode, keywords, broadcast) {
     var model = {
+      application: application,
       severity: severity,
       errorCode: errorCode,
       keywords: keywords,
@@ -24,8 +25,9 @@ export default {
     return axios.delete('/api/rules/' + id)
   },
 
-  update (id, severity, errorCode, keywords, broadcast) {
+  update (id, severity, application, errorCode, keywords, broadcast) {
     var model = {
+      application: application,
       severity: severity,
       errorCode: errorCode,
       keywords: keywords,

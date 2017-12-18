@@ -17,6 +17,15 @@
       </div>
     </div>
     <div class="field">
+      <label class="label">Application</label>
+      <div class="control">
+        <input 
+          class="input" 
+          type="text"
+          v-model="application">
+      </div>
+    </div>
+    <div class="field">
       <label class="label">Error Code</label>
       <div class="control">
         <input 
@@ -63,6 +72,7 @@ import Rules from '../services/RuleService'
 export default {
   data () {
     return {
+      application: '',
       severity: '',
       errorCode: '',
       keywords: '',
@@ -76,7 +86,7 @@ export default {
     create () {
       var inst = this
 
-      Rules.create(this.severity, this.errorCode, this.keywords, this.broadcastType)
+      Rules.create(this.severity, this.application, this.errorCode, this.keywords, this.broadcastType)
         .then(function (response) {
           if (response.data._id) {
             inst.close()
@@ -97,7 +107,7 @@ export default {
     update () {
       var inst = this
 
-      Rules.update(this.model._id, this.severity, this.errorCode, this.keywords, this.broadcastType)
+      Rules.update(this.model._id, this.severity, this.application, this.errorCode, this.keywords, this.broadcastType)
         .then(function (response) {
           if (response.data.success) {
             EventBus.$emit('rule:updated')
@@ -113,6 +123,8 @@ export default {
   mounted () {
     if (!this.model) return
 
+    this.application = this.model.application
+    this.broadcastType = 'notify'
     this.severity = this.model.severity
     this.errorCode = this.model.errorCode
 

@@ -8,8 +8,9 @@
             v-cloak>
             <tr 
               v-for="(alert, index) in alerts" 
-              :key="alert._id">
+              :key="alert._id">              
               <td><severity-tag :level="alert.severity" /></td>
+              <td>{{ alert.application }}</td>
               <td>{{ alert.errorCode }}</td>
               <td>{{ alert.message }}</td>              
               <td class="actions">
