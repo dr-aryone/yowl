@@ -10,6 +10,6 @@ export default {
   },
 
   remove (id) {
-    axios.delete('/api/alerts/' + id)
+    return axios.delete('/api/alerts/' + id)
   }
 }

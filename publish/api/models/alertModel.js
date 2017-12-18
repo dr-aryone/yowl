@@ -1,9 +1,10 @@
 'use strict'
 
 var Datastore = require('nedb')
+var path = require('path')
 
 var alertsDb = new Datastore({
-  filename: __dirname + '/../db/alerts.db',
+  filename: path.join(__dirname, '/../db/alerts.db'),
   autoload: true
 })
 

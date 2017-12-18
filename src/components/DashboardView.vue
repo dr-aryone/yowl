@@ -4,16 +4,21 @@
       <div class="columns">
         <div class="column">
           <table 
-            id="alerts-table" 
-            class="table is-hoverable is-fullwidth" 
+            class="main-table table is-hoverable is-fullwidth" 
             v-cloak>
             <tr 
               v-for="(alert, index) in alerts" 
               :key="alert._id">
               <td><severity-tag :level="alert.severity" /></td>
-              <td>{{ alert.type }}</td>
+              <td>{{ alert.errorCode }}</td>
               <td>{{ alert.message }}</td>              
-              <td class="alert-actions">
+              <td class="actions">
+                <button
+                  type="button"
+                  class="button is-light"
+                  @click="createRule(alert)">
+                  Create Rule
+                </button>
                 <button 
                   type="button" 
                   class="button is-light">
@@ -36,6 +41,7 @@
 
 <script>
 import Alerts from '../services/AlertService'
+import EventBus from '../services/EventBus'
 import SeverityTag from './SeverityTag'
 
 export default {
@@ -48,6 +54,9 @@ export default {
     }
   },
   methods: {
+    createRule (alert) {
+      EventBus.$emit('rule:create', alert)
+    },
     deleteAlert (id, index) {
       var inst = this
 
@@ -84,19 +93,4 @@ export default {
 </script>
 
 <style scoped>
-#alerts-table button {
-  visibility: hidden;
-}
-
-#alerts-table tr:hover button {
-  visibility: visible;
-}
-
-#alerts-table td {
-  vertical-align: middle;
-}
-
-.alert-actions {
-  text-align: right;
-}
 </style>
