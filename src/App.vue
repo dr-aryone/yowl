@@ -40,7 +40,7 @@
       v-if="currentPane" 
       :is="currentPane" 
       :model="paneModel"
-      @close="onPaneClose" />
+      @close="closePane" />
   </div>
 </template>
 
@@ -52,27 +52,34 @@ import RulesView from './components/RulesView'
 import Rule from './components/Rule'
 import SettingsView from './components/SettingsView'
 
+import SmtpConnection from './components/connections/SmtpConnection'
+
 export default {
   name: 'app',
   components: {
     DashboardView,
     RulesView,
     Rule,
-    SettingsView
+    SettingsView,
+    SmtpConnection
   },
   created () {
     var inst = this
 
+    EventBus.$on('connection:create', (type) => {
+      inst.openPane(type)
+    })
+
     EventBus.$on('rule:create', (alert) => {
       inst.paneModel = alert
-      inst.openRulePane()
+      inst.openPane('rule')
     })
 
     EventBus.$on('rule:edit', (rule) => {
       rule.updating = true
 
       inst.paneModel = rule
-      inst.openRulePane()
+      inst.openPane('rule')
     })
 
     var socket = IO.connect('http://localhost:3000')
@@ -87,11 +94,12 @@ export default {
     }
   },
   methods: {
-    onPaneClose () {
+    closePane () {
+      this.paneModel = {}
       this.currentPane = ''
     },
-    openRulePane () {
-      this.currentPane = 'rule'
+    openPane (pane) {
+      this.currentPane = pane
     },
     openView (view) {
       this.currentView = view

@@ -1,3 +1,4 @@
+'use strict'
 const Rules = require('../models/ruleModel')
 
 module.exports = function RuleController (router) {
