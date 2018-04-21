@@ -9,7 +9,10 @@
             <tr 
               v-for="(alert, index) in alerts" 
               :key="alert._id">              
-              <td><severity-tag :level="alert.severity" /></td>
+              <td>
+                <severity-tag :level="alert.severity" />
+                <span v-if="alert.count">x {{ alert.count }}</span>
+              </td>
               <td>{{ alert.application }}</td>
               <td>{{ alert.errorCode }}</td>
               <td>{{ alert.message }}</td>              
@@ -42,6 +45,7 @@
 
 <script>
 import Alerts from '../services/AlertService'
+import BrowserPush from '../services/BrowserPushService'
 import EventBus from '../services/EventBus'
 import SeverityTag from './SeverityTag'
 
@@ -54,6 +58,19 @@ export default {
 
     EventBus.$on('alert:created', (alert) => {
       inst.alerts.push(alert)
+
+      BrowserPush.sendNotification(alert.message)
+    })
+
+    EventBus.$on('alert:updated', (alert) => {
+      for (var i in inst.alerts) {
+        if (inst.alerts[i]._id !== alert._id) continue
+
+        inst.alerts[i] = alert
+        break
+      }
+
+      BrowserPush.sendNotification(alert._id, alert.message)
     })
   },
   data () {

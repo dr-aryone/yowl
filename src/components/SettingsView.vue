@@ -17,6 +17,19 @@
                   {{ smtpActive ? 'Connected' : 'Connect' }}
                 </button>
               </p>
+            </div>
+            <div class="tile box is-child">
+              <p class="title">
+                Browser Push Notification
+              </p>
+              <p class="action">
+                <button 
+                  type="button" 
+                  :class="['button', {'is-info': !browserPushActive}, {'is-success': browserPushActive}]" 
+                  @click="createConnection('BrowserPushConnection')">
+                  {{ browserPushActive ? 'Connected' : 'Connect' }}
+                </button>
+              </p>
             </div>            
           </div>
         </div>
@@ -37,6 +50,7 @@ import Connections from '../services/ConnectionService'
 export default {
   data () {
     return {
+      browserPushActive: false,
       smtpActive: false
     }
   },

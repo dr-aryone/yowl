@@ -52,11 +52,13 @@ import RulesView from './components/RulesView'
 import Rule from './components/Rule'
 import SettingsView from './components/SettingsView'
 
+import BrowserPushConnection from './components/connections/BrowserPushConnection'
 import SmtpConnection from './components/connections/SmtpConnection'
 
 export default {
   name: 'app',
   components: {
+    BrowserPushConnection,
     DashboardView,
     RulesView,
     Rule,
@@ -85,10 +87,11 @@ export default {
     var socket = IO.connect('http://localhost:3000')
     socket.on('connect', () => console.log('Socket connected.'))
     socket.on('alert:created', (alert) => EventBus.$emit('alert:created', alert))
+    socket.on('alert:updated', (alert) => EventBus.$emit('alert:updated', alert))
   },
   data () {
     return {
-      currentView: 'settings-view',
+      currentView: 'dashboard-view',
       currentPane: '',
       paneModel: {}
     }

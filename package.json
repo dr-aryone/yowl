@@ -4,6 +4,12 @@
   "description": "A Vue.js project",
   "author": "Nathan Englert <nenglert@gmail.com>",
   "private": true,
+  "eslintConfig": {
+    "env": {
+      "browser": true,
+      "node": true
+    }
+  },
   "scripts": {
     "dev": "node build/dev-server.js",
     "build": "node build/build.js",

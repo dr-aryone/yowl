@@ -16,6 +16,17 @@ module.exports = function (router) {
     })
   })
 
+  router.get('/connection/browserPush', function (req, res) {
+    Connections.findOne({_id: 'browserPush'}, function (err, settings) {
+      if (err) {
+        res.send(err)
+        return
+      }
+
+      res.json(settings || {})
+    })
+  })
+
   router.get('/connection/smtp', function (req, res) {
     Connections.findOne({_id: 'smtp'}, function (err, settings) {
       if (err) {
@@ -24,6 +35,21 @@ module.exports = function (router) {
       }
 
       res.json(settings || {})
+    })
+  })
+
+  router.post('/connection/browserPush', function (req, res) {
+    var settings = {
+      _id: 'browserPush'
+    }
+
+    Connections.update({_id: settings._id}, settings, {upsert: true}, function (err, numReplaced) {
+      if (err) {
+        res.send(err)
+        return
+      }
+
+      res.json({'success': numReplaced === 1})
     })
   })
 

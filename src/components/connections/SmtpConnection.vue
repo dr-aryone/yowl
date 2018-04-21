@@ -19,27 +19,32 @@
           v-model="settings.port">
       </div>
     </div> 
-    <div class="field">
-      <label class="label">Use Authentication</label>
-      <div class="control">
-        <div class="select">
-          <select v-model="settings.useAuthentication">
-            <option value="y">Yes</option>
-            <option value="n">No</option>            
-          </select>
+    <div class="field columns">
+      <div class="column">
+        <label class="label">Use Authentication</label>
+        <div class="control">
+          <div class="select">
+            <select v-model="settings.useAuthentication">
+              <option value="y">Yes</option>
+              <option value="n">No</option>            
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="column">
+        <label class="label">Use Secure Connection</label>
+        <div class="control">
+          <div class="select">
+            <select v-model="settings.useSecure">
+              <option value="y">Yes</option>
+              <option value="n">No</option>            
+            </select>
+          </div>
         </div>
       </div>
     </div>
     <div class="field">
-      <label class="label">Use Secure Connection</label>
-      <div class="control">
-        <div class="select">
-          <select v-model="settings.useSecure">
-            <option value="y">Yes</option>
-            <option value="n">No</option>            
-          </select>
-        </div>
-      </div>
+      
     </div>
     <div class="field">
       <label class="label">Username</label>
