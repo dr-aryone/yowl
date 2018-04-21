@@ -45,6 +45,7 @@
 </template>
 
 <script>
+import Connection from './components/Connection'
 import EventBus from './services/EventBus'
 import DashboardView from './components/DashboardView'
 import IO from 'socket.io-client'
@@ -52,24 +53,21 @@ import RulesView from './components/RulesView'
 import Rule from './components/Rule'
 import SettingsView from './components/SettingsView'
 
-import BrowserPushConnection from './components/connections/BrowserPushConnection'
-import SmtpConnection from './components/connections/SmtpConnection'
-
 export default {
   name: 'app',
   components: {
-    BrowserPushConnection,
+    Connection,
     DashboardView,
     RulesView,
     Rule,
-    SettingsView,
-    SmtpConnection
+    SettingsView
   },
   created () {
     var inst = this
 
-    EventBus.$on('connection:create', (type) => {
-      inst.openPane(type)
+    EventBus.$on('connection:create', (connection) => {
+      inst.paneModel = connection
+      inst.openPane('connection')
     })
 
     EventBus.$on('rule:create', (alert) => {

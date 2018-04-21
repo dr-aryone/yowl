@@ -1,0 +1,33 @@
+{
+  "name": "SMTP",
+  "settings": {
+    "host": {
+      "name": "Outgoing Mail (SMTP) Server",
+      "type": "text"
+    },
+    "port": {
+      "name": "Port",
+      "type": "number"
+    },
+    "useAuthentication": {
+      "name": "Use Authentication",
+      "type": "boolean"
+    },
+    "useSecureConnection": {
+      "name": "Use Secure Connection",
+      "type": "boolean"
+    },
+    "username": {
+      "name": "Username",
+      "type": "text"
+    },
+    "password": {
+      "name": "Password",
+      "type": "password"
+    },
+    "testEmailAddress": {
+      "name": "Test Email Address",
+      "type": "email"
+    }
+  }
+}

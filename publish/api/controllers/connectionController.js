@@ -3,21 +3,19 @@ const Smtp = require('../services/smtpService')
 const Connections = require('../models/connectionModel')
 
 module.exports = function (router) {
-  router.get('/connection', function (req, res) {
+  router.get('/connection', function (req, res) {    
     Connections.find({}, function (err, connections) {
       if (err) {
         res.send(err)
         return
       }
 
-      var keys = connections.map((conn) => conn._id)
-
-      res.json(keys)
+      res.json(connections)
     })
   })
 
-  router.get('/connection/browserPush', function (req, res) {
-    Connections.findOne({_id: 'browserPush'}, function (err, settings) {
+  router.get('/connection/:id', function (req, res) {
+    Connections.findOne({_id: req.params.id}, function (err, settings) {
       if (err) {
         res.send(err)
         return
@@ -25,25 +23,13 @@ module.exports = function (router) {
 
       res.json(settings || {})
     })
-  })
+  })  
 
-  router.get('/connection/smtp', function (req, res) {
-    Connections.findOne({_id: 'smtp'}, function (err, settings) {
-      if (err) {
-        res.send(err)
-        return
-      }
+  router.post('/connection/:id', function (req, res) {
+    var config = req.body
+    config._id = req.params.id
 
-      res.json(settings || {})
-    })
-  })
-
-  router.post('/connection/browserPush', function (req, res) {
-    var settings = {
-      _id: 'browserPush'
-    }
-
-    Connections.update({_id: settings._id}, settings, {upsert: true}, function (err, numReplaced) {
+    Connections.update({_id: config._id}, config, {upsert: true}, function (err, numReplaced) {
       if (err) {
         res.send(err)
         return
@@ -51,30 +37,9 @@ module.exports = function (router) {
 
       res.json({'success': numReplaced === 1})
     })
-  })
+  })  
 
-  router.post('/connection/smtp', function (req, res) {
-    var settings = {
-      host: req.body.host,
-      port: req.body.port,
-      useSecure: req.body.useSecure,
-      useAuthentication: req.body.useAuthentication,
-      username: req.body.username,
-      password: req.body.password,
-      _id: 'smtp'
-    }
-
-    Connections.update({_id: settings._id}, settings, {upsert: true}, function (err, numReplaced) {
-      if (err) {
-        res.send(err)
-        return
-      }
-
-      res.json({'success': numReplaced === 1})
-    })
-  })
-
-  router.post('/connection/smtp/test', function (req, res) {
+  router.post('/connection/:id/test', function (req, res) {
     var mailer = Smtp(
       req.body.host,
       req.body.port,

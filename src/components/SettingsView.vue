@@ -5,29 +5,18 @@
         <div class="column">
           <h4 class="title is-4">Connections</h4>
           <div class="tile is-ancestor">
-            <div class="tile box is-child">
+            <div class="tile box is-child"
+              v-for="(connection, index) in connections" 
+              :key="index">
               <p class="title">
-                SMTP
+                {{ connection.name }}
               </p>
               <p class="action">
                 <button 
                   type="button" 
-                  :class="['button', {'is-info': !smtpActive}, {'is-success': smtpActive}]" 
-                  @click="createConnection('SmtpConnection')">
-                  {{ smtpActive ? 'Connected' : 'Connect' }}
-                </button>
-              </p>
-            </div>
-            <div class="tile box is-child">
-              <p class="title">
-                Browser Push Notification
-              </p>
-              <p class="action">
-                <button 
-                  type="button" 
-                  :class="['button', {'is-info': !browserPushActive}, {'is-success': browserPushActive}]" 
-                  @click="createConnection('BrowserPushConnection')">
-                  {{ browserPushActive ? 'Connected' : 'Connect' }}
+                  :class="['button', {'is-info': !connection.isActive}, {'is-success': connection.isActive}]" 
+                  @click="createConnection(connection)">
+                  {{ connection.isActive ? 'Connected' : 'Connect' }}
                 </button>
               </p>
             </div>            
@@ -50,26 +39,25 @@ import Connections from '../services/ConnectionService'
 export default {
   data () {
     return {
-      browserPushActive: false,
-      smtpActive: false
+      connections: []
     }
   },
   methods: {
-    createConnection (type) {
-      EventBus.$emit('connection:create', type)
+    createConnection (connection) {
+      EventBus.$emit('connection:create', connection)
     },
-    loadActiveConnections () {
-      Connections.getAllActive()
+    getAllConnections () {
+      var inst = this
+
+      Connections.getAll()
         .then((response) => {
-          response.data.forEach((key) => {
-            this[key + 'Active'] = true
-          })
+          inst.connections = response.data
         })
         .catch((err) => console.log(err))
     }
   },
   mounted () {
-    this.loadActiveConnections()
+    this.getAllConnections()
   }
 }
 </script>

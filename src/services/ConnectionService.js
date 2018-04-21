@@ -1,22 +1,16 @@
 import axios from 'axios'
 
 export default {
-  getAllActive () {
+  getAll () {
     return axios.get('/api/connection')
   },
-  getBrowserPush () {
-    return axios.get('/api/connection/browserPush')
+  get (id) {
+    return axios.get('/api/connection/' + id)
   },
-  getSmtp () {
-    return axios.get('/api/connection/smtp')
+  save (id, model) {
+    return axios.post('/api/connection/' + id, model)
   },
-  saveBrowserPush (model) {
-    return axios.post('/api/connection/browserPush', model)
-  },
-  saveSmtp (model) {
-    return axios.post('/api/connection/smtp', model)
-  },
-  testSmtp (model) {
-    return axios.post('/api/connection/smtp/test', model)
+  test (id, model) {
+    return axios.post('/api/connection/' + id + '/test', model)
   }
 }
