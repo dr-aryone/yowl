@@ -29,7 +29,7 @@ module.exports = function (io) {
   //loadNewConnections()
 
   require('./controllers/alertController')(router, io)
-  // require('./controllers/connectionController')(router)
+  require('./controllers/connectionController')(router)
   // require('./controllers/ruleController')(router)
   // require('./controllers/userController')(router)
 

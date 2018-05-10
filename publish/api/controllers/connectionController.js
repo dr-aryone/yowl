@@ -1,42 +1,31 @@
 'use strict'
+const db = 'azure';
 const Smtp = require('../services/smtpService')
-const Connections = require('../repositories/nedb/connections')
+const Connections = require(`../repositories/${db}/connections`)
 
 module.exports = function (router) {
   router.get('/connection', function (req, res) {    
-    Connections.find({}, function (err, connections) {
-      if (err) {
-        res.send(err)
-        return
-      }
-
-      res.json(connections)
-    })
+    Connections
+      .getAll()
+      .then(function(conns) { res.json(conns); })
+      .catch(function(err) { res.send(err); });
   })
 
   router.get('/connection/:id', function (req, res) {
-    Connections.findOne({_id: req.params.id}, function (err, settings) {
-      if (err) {
-        res.send(err)
-        return
-      }
-
-      res.json(settings || {})
-    })
+    Connections
+      .get(req.params.id)
+      .then(function(settings) { res.json(settings || {}) })
+      .catch(function(err) { res.send(err); });
   })  
 
   router.post('/connection/:id', function (req, res) {
     var config = req.body
     config._id = req.params.id
 
-    Connections.update({_id: config._id}, config, {upsert: true}, function (err, numReplaced) {
-      if (err) {
-        res.send(err)
-        return
-      }
-
-      res.json({'success': numReplaced === 1})
-    })
+    Connections
+      .update(config)
+      .then(function() { res.json({'success': true})})
+      .catch(function(err) { res.send(err); });
   })  
 
   router.post('/connection/:id/test', function (req, res) {

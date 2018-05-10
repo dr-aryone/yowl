@@ -82,7 +82,7 @@ export default {
       inst.openPane('rule')
     })
 
-    var socket = IO.connect('http://localhost:3000')
+    var socket = IO.connect(`https://${window.location.hostname}`)
     socket.on('connect', () => console.log('Socket connected.'))
     socket.on('alert:created', (alert) => EventBus.$emit('alert:created', alert))
     socket.on('alert:updated', (alert) => EventBus.$emit('alert:updated', alert))

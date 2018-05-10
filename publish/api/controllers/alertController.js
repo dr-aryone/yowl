@@ -6,15 +6,13 @@ module.exports = function AlertController (router, io) {
     alert.count = alert.count || 0
     alert.count++
 
-    // Alerts.update({_id: alert._id}, alert, {}, function (err, numReplaced) {
-    //   if (err) {
-    //     res.send(err)
-    //     return
-    //   }
-
-    //   io.sockets.emit('alert:updated', alert)
-    //   res.json(alert)
-    // })
+    Alerts
+      .update(alert)
+      .then(function() {
+        io.sockets.emit('alert:updated', alert)
+        res.json(alert)
+      })
+      .catch(function(err) { res.send(err); })
   }
 
   function insertAlert (newAlert, res) {
@@ -33,7 +31,7 @@ module.exports = function AlertController (router, io) {
     Alerts
       .getAll()
       .then(function (alerts) {
-        res.send(alerts);
+        res.json(alerts);
       })
       .catch(function (err) {
         res.send(err);

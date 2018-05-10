@@ -15,7 +15,7 @@
               </td>
               <td>{{ alert.application }}</td>
               <td>{{ alert.errorCode }}</td>
-              <td>{{ alert.message }}</td>              
+              <td :title="alert.message">{{ alert.message | truncate(60) }}</td>              
               <td class="actions">
                 <button
                   type="button"
@@ -76,6 +76,12 @@ export default {
   data () {
     return {
       alerts: []
+    }
+  },
+  filters: {
+    truncate: function (text, length) {
+      var clamp = '...'
+      return text.length > length ? text.slice(0, length) + clamp : text
     }
   },
   methods: {
