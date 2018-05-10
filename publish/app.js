@@ -4,6 +4,7 @@ const app = express()
 const bodyParser = require('body-parser')
 const server = require('http').createServer(app)
 const io = require('socket.io')(server)
+const path = require('path')
 
 const api = require('./api')(io)
 
@@ -24,6 +25,7 @@ app.use(function (req, res, next) {
   res.json(err)
 })
 
-server.listen(3000, function () {
-  console.log('Listening on port 3000!')
+const port = process.env.PORT || 3000;
+server.listen(port, function () {
+  console.log(`Listening on port ${port}!`)
 })

@@ -1,5 +1,5 @@
 'use strict'
-const Rules = require('../models/ruleModel')
+const Rules = require('../repositories/nedb/rules')
 
 module.exports = function RuleController (router) {
   router.get('/rules', function (req, res) {

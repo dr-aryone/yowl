@@ -1,6 +1,6 @@
 'use strict'
 const Smtp = require('../services/smtpService')
-const Connections = require('../models/connectionModel')
+const Connections = require('../repositories/nedb/connections')
 
 module.exports = function (router) {
   router.get('/connection', function (req, res) {    

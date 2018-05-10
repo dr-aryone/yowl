@@ -1,5 +1,5 @@
 const bcrypt = require('bcrypt')
-const Users = require('../models/userModel')
+const Users = require('../repositories/nedb/users')
 
 module.exports = function (router) {
   router.post('/users/login', (req, res) => {
