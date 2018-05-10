@@ -9,14 +9,14 @@
                 <a class="navbar-item" @click="openView('dashboard-view')">
                   Yowl
                 </a>
-                <div class="navbar-burger burger" data-target="main-nav">
+                <div class="navbar-burger burger" data-target="main-nav" @click="showNav = !showNav">
                   <span></span>
                   <span></span>
                   <span></span>
                 </div>
               </div>
 
-              <div id="main-nav" class="navbar-menu">
+              <div id="main-nav" class="navbar-menu" :class="{'is-active': showNav}">
                 <div class="navbar-start">
                   <a :class="['navbar-item', {'is-active': currentView == 'dashboard-view'}]" @click="openView('dashboard-view')">
                     Dashboard
@@ -91,7 +91,8 @@ export default {
     return {
       currentView: 'dashboard-view',
       currentPane: '',
-      paneModel: {}
+      paneModel: {},
+      showNav: false
     }
   },
   methods: {

@@ -20,14 +20,21 @@ export default {
     })
   },
 
-  sendNotification (tag, message) {
+  sendNotification (severity, tag, message) {
     if (!isGranted()) {
       return
     }
 
+    var colors = {
+      info: '209cee',
+      warn: 'ffdd57',
+      error: 'ff3860',
+      fatal: '4a4a4a'
+    }
+
     var notification = new Notification(message, {
       tag: tag,
-      icon: 'https://dummyimage.com/128x128/ff3860/ff3860.png'
+      icon: `https://dummyimage.com/128x128/${colors[severity]}/${colors[severity]}.png`
     })
   }
 }

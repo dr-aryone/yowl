@@ -15,8 +15,10 @@
               </td>
               <td>{{ alert.application }}</td>
               <td>{{ alert.errorCode }}</td>
-              <td :title="alert.message">{{ alert.message | truncate(60) }}</td>              
-              <td class="actions">
+              <td :title="alert.message" class="is-hidden-mobile">
+                {{ alert.message | truncate(60) }}
+              </td>              
+              <td class="actions is-hidden-mobile">
                 <button
                   type="button"
                   class="button is-light"
@@ -59,7 +61,7 @@ export default {
     EventBus.$on('alert:created', (alert) => {
       inst.alerts.push(alert)
 
-      BrowserPush.sendNotification(alert.message)
+      BrowserPush.sendNotification(alert.severity, alert._id, alert.message)
     })
 
     EventBus.$on('alert:updated', (alert) => {
@@ -70,7 +72,7 @@ export default {
         break
       }
 
-      BrowserPush.sendNotification(alert._id, alert.message)
+      BrowserPush.sendNotification(alert.severity, alert._id, alert.message)
     })
   },
   data () {

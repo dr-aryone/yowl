@@ -11,7 +11,23 @@ export default {
   },
   computed: {
     levelClass () {
-      var name = this.level === 'error' ? 'danger' : this.level
+      var name = ''
+
+      switch (this.level) {
+        case 'warn':
+          name = 'warning'
+          break
+        case 'error':
+          name = 'danger'
+          break
+        case 'fatal':
+          name = 'grey-dark'
+          break
+        case 'default':
+          name = this.level
+          break
+      }
+
       return 'is-' + name
     },
     levelDisplay () {

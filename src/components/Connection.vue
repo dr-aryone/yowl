@@ -61,13 +61,13 @@ export default {
 
       if (inst.connection._id === 'browserPush') {
         if (BrowserPush.isGranted()) {
-          BrowserPush.sendNotification('test', 'This is a test.')
+          BrowserPush.sendNotification('INFO', 'test', 'This is a test.')
         } else {
           BrowserPush
             .requestPermission()
             .then(function (granted) {
               if (granted) {
-                BrowserPush.sendNotification('test', 'This is a test.')
+                BrowserPush.sendNotification('INFO', 'test', 'This is a test.')
               }
             })
         }
