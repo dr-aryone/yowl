@@ -30,7 +30,7 @@ module.exports = function (io) {
 
   require('./controllers/alertController')(router, io)
   require('./controllers/connectionController')(router)
-  // require('./controllers/ruleController')(router)
+  require('./controllers/ruleController')(router, io)
   // require('./controllers/userController')(router)
 
   return router

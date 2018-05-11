@@ -1,22 +1,22 @@
 'use strict'
-const db = 'azure';
+const db = 'azure'
 const Smtp = require('../services/smtpService')
 const Connections = require(`../repositories/${db}/connections`)
 
 module.exports = function (router) {
-  router.get('/connection', function (req, res) {    
+  router.get('/connection', function (req, res) {
     Connections
       .getAll()
-      .then(function(conns) { res.json(conns); })
-      .catch(function(err) { res.send(err); });
+      .then((conns) => res.json(conns))
+      .catch((err) => res.send(err))
   })
 
   router.get('/connection/:id', function (req, res) {
     Connections
       .get(req.params.id)
-      .then(function(settings) { res.json(settings || {}) })
-      .catch(function(err) { res.send(err); });
-  })  
+      .then((settings) => res.json(settings || {}))
+      .catch((err) => res.send(err))
+  })
 
   router.post('/connection/:id', function (req, res) {
     var config = req.body
@@ -24,9 +24,9 @@ module.exports = function (router) {
 
     Connections
       .update(config)
-      .then(function() { res.json({'success': true})})
-      .catch(function(err) { res.send(err); });
-  })  
+      .then(() => res.json({'success': true}))
+      .catch((err) => res.send(err))
+  })
 
   router.post('/connection/:id/test', function (req, res) {
     var mailer = Smtp(

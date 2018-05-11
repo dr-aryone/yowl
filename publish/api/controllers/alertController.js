@@ -1,4 +1,4 @@
-const db = 'azure';
+const db = 'azure'
 const Alerts = require(`../repositories/${db}/alerts`)
 
 module.exports = function AlertController (router, io) {
@@ -8,11 +8,11 @@ module.exports = function AlertController (router, io) {
 
     Alerts
       .update(alert)
-      .then(function() {
+      .then(function () {
         io.sockets.emit('alert:updated', alert)
         res.json(alert)
       })
-      .catch(function(err) { res.send(err); })
+      .catch((err) => res.send(err))
   }
 
   function insertAlert (newAlert, res) {
@@ -22,48 +22,37 @@ module.exports = function AlertController (router, io) {
         io.sockets.emit('alert:created', alert)
         res.json(alert)
       })
-      .catch(function (err) {
-        res.send(err)
-      });
+      .catch((err) => res.send(err))
   }
 
   router.get('/alerts', function (req, res) {
     Alerts
       .getAll()
-      .then(function (alerts) {
-        res.json(alerts);
-      })
-      .catch(function (err) {
-        res.send(err);
-      });
+      .then((alerts) => res.json(alerts))
+      .catch((err) => res.send(err))
   })
 
   router.post('/alerts', function (req, res) {
-    var newAlert = req.body;
+    var newAlert = req.body
 
     Alerts
       .find(newAlert.application, newAlert.errorCode)
       .then(function (alert) {
         if (alert != null) {
           increaseAlertCount(alert, res)
-        }
-        else {
+        } else {
           insertAlert(newAlert, res)
         }
       })
       .catch(function (err) {
-        res.send(err);
-      });
-  });
+        res.send(err)
+      })
+  })
 
   router.delete('/alerts/:alertId', function (req, res) {
     Alerts
       .delete({_id: req.params.alertId})
-      .then(function() {
-        res.json({'success': true})
-      })
-      .catch(function(err) {
-        res.send(err)
-      })
+      .then(() => res.json({'success': true}))
+      .catch((err) => res.send(err))
   })
 }
