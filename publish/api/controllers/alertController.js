@@ -27,6 +27,33 @@ module.exports = function AlertController (router, io) {
       });
   }
 
+  function convertSplunkToYowl(req){
+    //SPLUNK WEBHOOK PAYLOAD - http://docs.splunk.com/Documentation/Splunk/6.6.4/Alert/Webhooks
+      return {
+          application: req.app,
+          errorCode: req.search_name,
+          message: req.results_link,
+          severity: 'error'
+      }
+  }
+
+  function incomingAlert(newAlert, res){
+    
+    Alerts
+      .find(newAlert.application, newAlert.errorCode)
+      .then(function (alert) {
+        if (alert != null) {
+          increaseAlertCount(alert, res)
+        }
+        else {
+          insertAlert(newAlert, res)
+        }
+      })
+      .catch(function (err) {
+        res.send(err);
+      });
+  }
+
   router.get('/alerts', function (req, res) {
     Alerts
       .getAll()
@@ -41,19 +68,13 @@ module.exports = function AlertController (router, io) {
   router.post('/alerts', function (req, res) {
     var newAlert = req.body;
 
-    Alerts
-      .find(newAlert.application, newAlert.errorCode)
-      .then(function (alert) {
-        if (alert != null) {
-          increaseAlertCount(alert, res)
-        }
-        else {
-          insertAlert(newAlert, res)
-        }
-      })
-      .catch(function (err) {
-        res.send(err);
-      });
+    incomingAlert(newAlert, res);
+  });
+
+  router.post('/alerts/splunk', function (req, res) {
+    var newAlert = convertSplunkToYowl(req.body);
+
+    incomingAlert(newAlert, res);
   });
 
   router.delete('/alerts/:alertId', function (req, res) {
